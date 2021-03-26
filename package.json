@@ -1,0 +1,32 @@
+{
+  "name": "vuetify-time-range-picker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/time-range-picker.umd.js",
+  "module": "dist/time-range-picker.esm.js",
+  "unpkg": "dist/time-range-picker.min.js",
+  "browser": {
+    "./sfc": "src/time-range-picker.vue"
+  },
+  "scripts": {
+    "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/my-component.umd.js",
+    "build:es": "rollup --config build/rollup.config.js --format es --file dist/my-component.esm.js",
+    "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/my-component.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arthursb2016/vuetify-time-range-picker.git"
+  },
+  "author": "Arthur Borba",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arthursb2016/vuetify-time-range-picker/issues"
+  },
+  "homepage": "https://github.com/arthursb2016/vuetify-time-range-picker#readme",
+  "devDependencies": {
+    "rollup": "^2.42.4",
+    "vue": "^2.6.12",
+    "vue-template-compiler": "^2.6.12"
+  }
+}
