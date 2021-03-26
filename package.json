@@ -25,7 +25,10 @@
   },
   "homepage": "https://github.com/arthursb2016/vuetify-time-range-picker#readme",
   "devDependencies": {
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-commonjs": "^17.1.0",
     "rollup": "^2.42.4",
+    "rollup-plugin-vue": "^6.0.0",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.6.12"
   }
