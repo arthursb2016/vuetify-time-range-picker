@@ -4,13 +4,11 @@
   </v-app>
 </template>
 <script>
-import { VApp } from 'vuetify/lib';
 import TimeRangePicker from './components/TimeRangePicker';
 
 export default {
   name: 'Demo',
   components: {
-    VApp,
     TimeRangePicker,
   },
   mixins: [],
