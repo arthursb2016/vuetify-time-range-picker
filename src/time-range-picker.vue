@@ -75,9 +75,19 @@
   </div>
 </template>
 <script>
+import {
+  VSelect,
+  VIcon,
+  VCheckbox,
+} from 'vuetify/lib';
+
 export default {
   name: 'TimeRangePicker',
-  components: {},
+  components: {
+    VSelect,
+    VIcon,
+    VCheckbox,
+  },
   mixins: [],
   props: {
     inputLabel: {
