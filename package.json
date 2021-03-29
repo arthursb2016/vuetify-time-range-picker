@@ -31,6 +31,7 @@
     "deepmerge": "^4.2.2",
     "material-design-icons-iconfont": "^6.1.0",
     "rollup": "^2.42.4",
+    "rollup-plugin-scss": "^2.6.1",
     "rollup-plugin-vue": "^6.0.0",
     "sass": "^1.32.8",
     "sass-loader": "^10.1.1",
