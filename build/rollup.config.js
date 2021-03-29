@@ -1,6 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs';
 import vue from 'rollup-plugin-vue';
 import buble from '@rollup/plugin-buble';
+import scss from 'rollup-plugin-scss';
 
 export default {
   input: 'src/index.js',
@@ -13,6 +14,7 @@ export default {
         css: true,
         compileTemplate: true,
     }),
+    scss(),
     commonjs(),
     buble(),
   ],
