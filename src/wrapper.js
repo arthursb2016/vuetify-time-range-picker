@@ -1,8 +1,23 @@
+import Vuetify, {
+  VSelect,
+  VIcon,
+  VCheckbox,
+} from 'vuetify/lib';
 import TimeRangePicker from './time-range-picker.vue';
 
 export function install(Vue) {
   if (install.installed) return;
   install.installed = true;
+  Vue.use(Vuetify, {
+    components: {
+      VSelect,
+      VIcon,
+      VCheckbox,
+    },
+    directives: {
+      Ripple,
+    },
+  });
   Vue.component('TimeRangePicker', TimeRangePicker);
 }
 

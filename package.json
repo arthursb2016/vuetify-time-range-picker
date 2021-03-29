@@ -34,7 +34,9 @@
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "vue": "^2.6.12",
-    "vue-template-compiler": "^2.6.12",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "dependencies": {
     "vuetify": "^2.4.8"
   }
 }
