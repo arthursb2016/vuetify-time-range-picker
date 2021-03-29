@@ -230,5 +230,54 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
+.interval-select {
+  &.start-time {
+    ::v-deep fieldset {
+      border-right: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    ::v-deep .v-label {
+      background: white;
+      padding-right: 3px;
+    }
+    ::v-deep .v-input__control {
+      border-right: 1px dashed gray;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+  }
+  &.end-time {
+    ::v-deep fieldset {
+      border-left: 0px;
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+  }
+  &.hovering {
+    ::v-deep fieldset {
+      border-color: gray;
+    }
+  }
+  &.focusing {
+    ::v-deep fieldset {
+      border-width: 2px;
+      border-color: blue;
+    }
+  }
+}
+.v-select {
+  font-size: 0.75rem;
+}
+.whole-day {
+  ::v-deep .v-input {
+    transform: scale(0.75);
+    float: left;
+    &.cursor-not-allowed {
+      .v-label, input {
+        cursor: not-allowed !important;
+      }
+    }
+  }
+}
 </style>

@@ -1,6 +1,8 @@
 <template>
   <v-app id="app">
-    <time-range-picker />
+    <div class="demo-container">
+      <time-range-picker />
+    </div>
   </v-app>
 </template>
 <script>
@@ -21,5 +23,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
+.demo-container {
+  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
