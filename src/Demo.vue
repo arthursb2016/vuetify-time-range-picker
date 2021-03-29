@@ -1,5 +1,5 @@
 <template>
-  <v-app id="demo">
+  <v-app id="app">
     <time-range-picker />
   </v-app>
 </template>

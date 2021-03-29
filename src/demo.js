@@ -5,4 +5,4 @@ import Demo from './Demo';
 new Vue({
   vuetify,
   render: h => h(Demo)
-}).$mount('#demo')
+}).$mount('#app')
