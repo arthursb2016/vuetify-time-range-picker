@@ -82,6 +82,8 @@ import {
 } from 'vuetify/lib';
 
 const DEFAULT_STEP = 15;
+const DEFAULT_START_TIME = '00:00';
+const DEFAULT_END_TIME = '23:59';
 
 export default {
   name: 'TimeRangePicker',
@@ -92,6 +94,10 @@ export default {
   },
   mixins: [],
   props: {
+    range: {
+      type: Object,
+      default: () => {},
+    },
     inputLabel: {
       type: String,
       default: () => 'Interval',
@@ -113,10 +119,14 @@ export default {
       default: () => false,
     },
   },
+  model: {
+    prop: 'range',
+    event: 'update',
+  },
   data() {
     return {
-      startTime: '00:00',
-      endTime: '23:59',
+      startTime: DEFAULT_START_TIME,
+      endTime: DEFAULT_END_TIME,
       hovering: false,
       focusing: false,
       wholeDay: true,
@@ -145,7 +155,9 @@ export default {
     },
     endTimes() {
       const filter = endTime => this.isGreater(endTime);
-      return this.times.slice(1, this.times.length).concat(['23:59']).filter(filter);
+      return this.times.slice(1, this.times.length)
+        .concat([DEFAULT_END_TIME])
+        .filter(filter);
     },
     isHovering() {
       return this.hovering;
@@ -155,6 +167,19 @@ export default {
     },
   },
   watch: {
+    range: {
+      deep: true,
+      handler() {
+        const inputRange = {
+          start: this.startTime,
+          end: this.endTime,
+        };
+        if (JSON.stringify(this.range) === JSON.stringify(inputRange)) {
+          return;
+        }
+        this.initValues();
+      },
+    },
     startTime() {
       this.checkWholeDay();
       this.$nextTick(() => {
@@ -169,11 +194,18 @@ export default {
     },
   },
   mounted() {
-    this.startTime = '00:00';
-    this.endTime = '23:59';
-    this.onUpdate();
+    this.initValues();
   },
   methods: {
+    initValues() {
+      const finder = time => (i) => i === time;
+      const start = this.startTimes.find(finder(this.range.start));
+      const end = this.endTimes.find(finder(this.range.end));
+      this.startTime = start || DEFAULT_START_TIME;
+      this.endTime = end || DEFAULT_END_TIME;
+      if (start && end) return;
+      this.onUpdate();
+    },
     setHovering(hovering) {
       this.hovering = hovering;
     },
@@ -198,8 +230,8 @@ export default {
     },
     onUpdate() {
       this.$emit('update', {
-        startTime: this.startTime,
-        endTime: this.endTime,
+        start: this.startTime,
+        end: this.endTime,
       });
     },
     onWholeDayChange() {
