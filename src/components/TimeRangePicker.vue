@@ -13,7 +13,6 @@
         rounded
         outlined
         dense
-        append-icon=""
         hide-details
         class="interval-select start-time"
         :class="{
@@ -33,7 +32,6 @@
         rounded
         outlined
         dense
-        append-icon=""
         hide-details
         class="interval-select end-time"
         :class="{
@@ -46,10 +44,11 @@
         @blur="setFocusing(false)"
       />
       <v-icon
+        v-if="!hideIcon && icon"
         color="orange"
         class="ml-1"
       >
-        access_time
+        {{ icon }}
       </v-icon>
     </div>
     <div
@@ -117,6 +116,14 @@ export default {
     disabled: {
       type: Boolean,
       default: () => false,
+    },
+    hideIcon: {
+      type: Boolean,
+      default: () => false,
+    },
+    icon: {
+      type: String,
+      default: () => 'access_time',
     },
   },
   model: {
