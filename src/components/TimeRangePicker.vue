@@ -81,6 +81,8 @@ import {
   VCheckbox,
 } from 'vuetify/lib';
 
+const DEFAULT_STEP = 15;
+
 export default {
   name: 'TimeRangePicker',
   components: {
@@ -100,7 +102,7 @@ export default {
     },
     step: {
       type: [String, Number],
-      default: () => 15,
+      default: () => DEFAULT_STEP,
     },
     hideWholeDayCheckbox: {
       type: Boolean,
@@ -122,9 +124,10 @@ export default {
   },
   computed: {
     times() {
-      const step = parseInt(this.step, 10);
       const maxHour = 24;
       const maxMin = 59;
+      const parsedStep = parseInt(this.step, 10);
+      const step = parsedStep >= maxMin ? DEFAULT_STEP : parsedStep;
       const times = [];
       let hh = 0;
       while (hh < maxHour) {
