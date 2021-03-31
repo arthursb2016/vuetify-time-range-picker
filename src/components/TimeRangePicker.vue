@@ -120,7 +120,6 @@ const ENABLED_BINDINGS = {
     'solo',
     'solo-inverted',
   ],
-
 };
 
 export default {
