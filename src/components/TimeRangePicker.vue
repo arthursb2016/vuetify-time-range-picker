@@ -19,6 +19,7 @@
           'focusing': isFocusing,
         }"
         :append-icon="startAppendIcon"
+        v-bind="props"
         @change="onChange"
         @focus="setFocusing(true)"
         @blur="setFocusing(false)"
@@ -37,6 +38,7 @@
           'focusing': isFocusing,
         }"
         :append-icon="endAppendIcon"
+        v-bind="props"
         @change="onChange"
         @focus="setFocusing(true)"
         @blur="setFocusing(false)"
