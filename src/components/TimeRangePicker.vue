@@ -12,14 +12,13 @@
         :label="inputLabel"
         rounded
         outlined
-        dense
         hide-details
         class="interval-select start-time"
         :class="{
           'hovering': isHovering,
           'focusing': isFocusing,
         }"
-        :disabled="disabled"
+        :append-icon="startAppendIcon"
         @change="onChange"
         @focus="setFocusing(true)"
         @blur="setFocusing(false)"
@@ -31,18 +30,18 @@
         label=""
         rounded
         outlined
-        dense
         hide-details
         class="interval-select end-time"
         :class="{
           'hovering': isHovering,
           'focusing': isFocusing,
         }"
-        :disabled="disabled"
+        :append-icon="endAppendIcon"
         @change="onChange"
         @focus="setFocusing(true)"
         @blur="setFocusing(false)"
       />
+      <!-- <slot name="append" /> -->
       <v-icon
         v-if="!hideIcon && icon"
         color="orange"
@@ -67,7 +66,7 @@
         :class="{
           'cursor-not-allowed': wholeDay,
         }"
-        :disabled="disabled"
+        :disabled="props.disabled"
         @change="onWholeDayChange"
       />
     </div>
@@ -83,6 +82,18 @@ import {
 const DEFAULT_STEP = 15;
 const DEFAULT_START_TIME = '00:00';
 const DEFAULT_END_TIME = '23:59';
+
+const ENABLED_PROPS = {
+  V_SELECT: [
+    'background-color',
+    'color',
+    'dark',
+    'dense',
+    'disable-lookup',
+    'disabled',
+    'eager',
+  ],
+};
 
 export default {
   name: 'TimeRangePicker',
@@ -113,10 +124,6 @@ export default {
       type: Boolean,
       default: () => false,
     },
-    disabled: {
-      type: Boolean,
-      default: () => false,
-    },
     hideIcon: {
       type: Boolean,
       default: () => false,
@@ -124,6 +131,14 @@ export default {
     icon: {
       type: String,
       default: () => 'access_time',
+    },
+    startAppendIcon: {
+      type: String,
+      default: () => '',
+    },
+    endAppendIcon: {
+      type: String,
+      default: () => '',
     },
   },
   model: {
@@ -140,6 +155,17 @@ export default {
     };
   },
   computed: {
+    props() {
+      const enabled = [...ENABLED_PROPS.V_SELECT];
+      const filter = i => typeof this.$attrs[i] !== 'undefined';
+      const reducer = (props, value) => {
+        return {
+          ...props,
+          [value]: this.$attrs[value],
+        };
+      }
+      return enabled.filter(filter).reduce(reducer, {});
+    },
     times() {
       const maxHour = 24;
       const maxMin = 59;
@@ -202,6 +228,7 @@ export default {
   },
   mounted() {
     this.initValues();
+    console.log(this.props);
   },
   methods: {
     initValues() {
