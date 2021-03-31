@@ -45,11 +45,11 @@
       />
       <!-- <slot name="append" /> -->
       <v-icon
-        v-if="!hideIcon && icon"
+        v-if="!hideOuterIcon && outerIcon"
         color="orange"
         class="ml-1"
       >
-        {{ icon }}
+        {{ outerIcon }}
       </v-icon>
     </div>
     <div
@@ -62,12 +62,15 @@
         color="orange"
         class="pt-0 mt-0"
         :label="wholeDayLabel"
-        hide-details
         :readonly="wholeDay"
         :ripple="!wholeDay"
         :class="{
           'cursor-not-allowed': wholeDay,
         }"
+        :hide-details="props['hide-details'] || false"
+        :error="props['error'] || false"
+        :error-count="props['error-count'] || 1"
+        :error-messages="props['error-messages'] || ''"
         :disabled="props.disabled"
         @change="onWholeDayChange"
       />
@@ -94,6 +97,9 @@ const ENABLED_PROPS = {
     'disable-lookup',
     'disabled',
     'eager',
+    'error',
+    'error-count',
+    'error-messages',
   ],
 };
 
@@ -342,8 +348,13 @@ export default {
 }
 .whole-day {
   ::v-deep .v-input {
-    transform: scale(0.75);
     float: left;
+    .v-input__slot {
+      transform: scale(0.75);
+    }
+    .v-messages {
+      margin-left: 18px;
+    }
     &.cursor-not-allowed {
       .v-label, input {
         cursor: not-allowed !important;
