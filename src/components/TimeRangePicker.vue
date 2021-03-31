@@ -126,11 +126,11 @@ export default {
       type: Boolean,
       default: () => false,
     },
-    hideIcon: {
+    hideOuterIcon: {
       type: Boolean,
       default: () => false,
     },
-    icon: {
+    outerIcon: {
       type: String,
       default: () => 'access_time',
     },
