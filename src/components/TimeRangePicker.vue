@@ -2,7 +2,7 @@
   <div
     class="time-range-picker-container"
     :class="{
-      'full-width': props['full-width'] || props['full-width'] === '',
+      'full-width': bindings['full-width'],
     }"
   >
     <div
@@ -24,7 +24,7 @@
           'focusing': isFocusing,
         }"
         :append-icon="startAppendIcon"
-        v-bind="props"
+        v-bind="vSelectBindings"
         @change="onChange"
         @focus="setFocusing(true)"
         @blur="setFocusing(false)"
@@ -43,7 +43,7 @@
           'focusing': isFocusing,
         }"
         :append-icon="endAppendIcon"
-        v-bind="props"
+        v-bind="vSelectBindings"
         @change="onChange"
         @focus="setFocusing(true)"
         @blur="setFocusing(false)"
@@ -72,11 +72,13 @@
         :class="{
           'cursor-not-allowed': wholeDay,
         }"
-        :hide-details="props['hide-details'] || false"
-        :error="props['error'] || false"
-        :error-count="props['error-count'] || 1"
-        :error-messages="props['error-messages'] || ''"
-        :disabled="props.disabled"
+        :disabled="vSelectBindings.disabled"
+        :error="vSelectBindings.error"
+        :error-count="bindings['error-count'] || 1"
+        :error-messages="bindings['error-messages'] || ''"
+        :hide-details="bindings['hide-details'] || false"
+        :hint="bindings['hint'] || ''"
+        :persistent-hint="showHint"
         @change="onWholeDayChange"
       />
     </div>
@@ -93,8 +95,16 @@ const DEFAULT_STEP = 15;
 const DEFAULT_START_TIME = '00:00';
 const DEFAULT_END_TIME = '23:59';
 
-const ENABLED_PROPS = {
-  V_SELECT: [
+const ENABLED_BINDINGS = {
+  COMPONENT: [
+    'error-count',
+    'error-messages',
+    'full-width',
+    'hide-details',
+    'hint',
+    'persistent-hint',
+  ],
+  SELECT: [
     'background-color',
     'color',
     'dark',
@@ -103,14 +113,14 @@ const ENABLED_PROPS = {
     'disabled',
     'eager',
     'error',
-    'error-count',
-    'error-messages',
     'filled',
     'flat',
-    'full-width',
+    'height',
+    'hide-selected',
     'solo',
     'solo-inverted',
   ],
+
 };
 
 export default {
@@ -173,16 +183,11 @@ export default {
     };
   },
   computed: {
-    props() {
-      const enabled = [...ENABLED_PROPS.V_SELECT];
-      const filter = i => typeof this.$attrs[i] !== 'undefined';
-      const reducer = (props, value) => {
-        return {
-          ...props,
-          [value]: this.$attrs[value],
-        };
-      }
-      return enabled.filter(filter).reduce(reducer, {});
+    bindings() {
+      return this.getBindings('COMPONENT');
+    },
+    vSelectBindings() {
+      return this.getBindings('SELECT');
     },
     times() {
       const maxHour = 24;
@@ -216,6 +221,9 @@ export default {
     isFocusing() {
       return this.focusing;
     },
+    showHint() {
+      return this.isFocusing || this.bindings['persistent-hint'];
+    },
   },
   watch: {
     range: {
@@ -248,6 +256,18 @@ export default {
     this.initValues();
   },
   methods: {
+    getBindings(name) {
+      const enabled = [...ENABLED_BINDINGS[name]];
+      const filter = i => typeof this.$attrs[i] !== 'undefined';
+      const reducer = (props, key) => {
+        const value = this.$attrs[key] === '' ? true : this.$attrs[key];
+        return {
+          ...props,
+          [key]: value,
+        };
+      }
+      return enabled.filter(filter).reduce(reducer, {});
+    },
     initValues() {
       const finder = time => (i) => i === time;
       const start = this.startTimes.find(finder(this.range.start));
