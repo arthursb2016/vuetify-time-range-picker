@@ -100,6 +100,7 @@ const ENABLED_PROPS = {
     'error',
     'error-count',
     'error-messages',
+    'filled',
   ],
 };
 
@@ -327,6 +328,10 @@ export default {
   &.end-time {
     ::v-deep fieldset {
       border-left: 0px;
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+    ::v-deep .v-input__control {
       border-top-left-radius: 0px;
       border-bottom-left-radius: 0px;
     }
