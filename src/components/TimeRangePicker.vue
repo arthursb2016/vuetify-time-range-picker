@@ -119,6 +119,7 @@ const ENABLED_BINDINGS = {
     'solo',
     'solo-inverted',
     'item-color',
+    'light',
   ],
 };
 
