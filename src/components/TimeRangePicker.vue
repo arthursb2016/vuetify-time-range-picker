@@ -74,6 +74,7 @@
         :disabled="vSelectBindings.disabled"
         :error="vSelectBindings.error"
         :light="vSelectBindings.light"
+        :messages="bindings['messages'] || ''"
         :error-count="bindings['error-count'] || 1"
         :error-messages="bindings['error-messages'] || ''"
         :hide-details="bindings['hide-details'] || false"
@@ -103,6 +104,7 @@ const ENABLED_BINDINGS = {
     'hide-details',
     'hint',
     'persistent-hint',
+    'messages',
   ],
   SELECT: [
     'background-color',
@@ -406,9 +408,6 @@ export default {
       }
     }
   }
-  /*.v-select {
-    font-size: 0.75rem;
-  }*/
   .whole-day {
     ::v-deep .v-input {
       float: left;
