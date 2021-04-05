@@ -129,6 +129,7 @@ const ENABLED_BINDINGS = {
     'outlined',
     'rounded',
   ],
+  /* stopped at 'prefix' */
 };
 
 export default {
@@ -203,6 +204,11 @@ export default {
       const isDarkTheme = this.$vuetify.theme.isDark;
       return (isDarkTheme && !this.vSelectBindings.light)
         || (!isDarkTheme && this.vSelectBindings.dark);
+    },
+    componentColor() {
+      const theme = this.isDark ? 'dark' : 'light';
+      const defaultColor = this.$vuetify.theme.defaults[theme].primary;
+      return this.vSelectBindings.color || defaultColor;
     },
     bindings() {
       return this.getBindings('COMPONENT');
@@ -318,10 +324,26 @@ export default {
     },
     setFocusing(focusing) {
       this.focusing = focusing;
-      if (!focusing) {
-        this.$refs.startTime.blur();
-        this.$refs.endTime.blur();
+      if (focusing) {
+        this.setInputsBorder({
+          borderColor: this.componentColor,
+          borderWidth: '2px',
+        });
+        return;
       }
+      this.setInputsBorder();
+      this.$refs.startTime.blur();
+      this.$refs.endTime.blur();
+    },
+    setInputsBorder(params = { borderColor: '', borderWidth: '' }) {
+      /* TODO: change border color os .v-input__slot::before when it's not outlined */
+      const query = this.vSelectBindings.outlined ? 'fieldset' : '';
+      const elements = document.querySelectorAll(`.interval-select ${query}`);
+      elements.forEach((item) => {
+        Object.keys(params).forEach((key) => {
+          item.style[key] = params[key];
+        });
+      });
     },
     doubleDigit(digit) {
       if ((typeof digit === 'string' && digit.length === 1)
@@ -414,12 +436,6 @@ export default {
         ::v-deep fieldset, ::v-deep .v-input__slot::before {
           border-color: rgba(0, 0, 0, 0.87);
         }
-      }
-    }
-    &.focusing {
-      ::v-deep fieldset {
-        border-width: 2px;
-        /*border-color: blue;*/
       }
     }
   }
