@@ -51,7 +51,7 @@
       <!-- <slot name="append" /> -->
       <v-icon
         v-if="!hideOuterIcon && outerIcon"
-        color="orange"
+        :color="outerIconColor"
         class="ml-1"
       >
         {{ outerIcon }}
@@ -64,7 +64,6 @@
       <v-checkbox
         v-model="wholeDay"
         dense
-        color="orange"
         class="pt-0 mt-0"
         :label="wholeDayLabel"
         :readonly="wholeDay"
@@ -119,7 +118,9 @@ const ENABLED_BINDINGS = {
     'hide-selected',
     'solo',
     'solo-inverted',
+    'item-color',
   ],
+  /* stopped at 'item-color' */
 };
 
 export default {
@@ -158,6 +159,10 @@ export default {
     outerIcon: {
       type: String,
       default: () => 'access_time',
+    },
+    outerIconColor: {
+      type: String,
+      default: () => '',
     },
     startAppendIcon: {
       type: String,
