@@ -13,7 +13,7 @@
       <v-select
         ref="startTime"
         v-model="startTime"
-        :items="startTimes"
+        :items="getTimes('start')"
         :label="inputLabel"
         rounded
         outlined
@@ -32,7 +32,7 @@
       <v-select
         ref="endTime"
         v-model="endTime"
-        :items="endTimes"
+        :items="getTimes('end')"
         label=""
         rounded
         outlined
@@ -120,7 +120,6 @@ const ENABLED_BINDINGS = {
     'solo-inverted',
     'item-color',
   ],
-  /* stopped at 'item-color' */
 };
 
 export default {
@@ -171,6 +170,10 @@ export default {
     endAppendIcon: {
       type: String,
       default: () => '',
+    },
+    disabledTimes: {
+      type: [String, Array],
+      default: () => [],
     },
   },
   model: {
@@ -228,6 +231,12 @@ export default {
     showHint() {
       return this.isFocusing || this.bindings['persistent-hint'];
     },
+    computedDisabledTimes() {
+      if (typeof this.disabledTimes === 'string') {
+        return [this.disabledTimes];
+      }
+      return this.disabledTimes;
+    },
   },
   watch: {
     range: {
@@ -260,6 +269,15 @@ export default {
     this.initValues();
   },
   methods: {
+    getTimes(name) {
+      return this[`${name}Times`].map((time) => {
+        return {
+          text: time,
+          value: time,
+          disabled: this.computedDisabledTimes.includes(time),
+        };
+      });
+    },
     getBindings(name) {
       const enabled = [...ENABLED_BINDINGS[name]];
       const filter = i => typeof this.$attrs[i] !== 'undefined';
@@ -299,6 +317,12 @@ export default {
       }
       return digit;
     },
+    onWholeDayChange() {
+      if (!this.wholeDay) return;
+      this.startTime = '00:00';
+      this.endTime = '23:59';
+      this.onUpdate();
+    },
     onChange() {
       this.focusing = true;
       this.onUpdate();
@@ -308,11 +332,6 @@ export default {
         start: this.startTime,
         end: this.endTime,
       });
-    },
-    onWholeDayChange() {
-      if (!this.wholeDay) return;
-      this.startTime = '00:00';
-      this.endTime = '23:59';
     },
     checkWholeDay() {
       if (this.startTime === '00:00' && this.endTime === '23:59') {
