@@ -15,11 +15,11 @@
         v-model="startTime"
         :items="getTimes('start')"
         :label="inputLabel"
-        rounded
-        outlined
         hide-details
         class="interval-select start-time"
         :class="{
+          'is-dark': isDark,
+          'is-light': !isDark,
           'hovering': isHovering,
           'focusing': isFocusing,
         }"
@@ -34,11 +34,11 @@
         v-model="endTime"
         :items="getTimes('end')"
         label=""
-        rounded
-        outlined
         hide-details
         class="interval-select end-time"
         :class="{
+          'is-dark': isDark,
+          'is-light': !isDark,
           'hovering': isHovering,
           'focusing': isFocusing,
         }"
@@ -71,9 +71,11 @@
         :class="{
           'cursor-not-allowed': wholeDay,
         }"
-        :disabled="vSelectBindings.disabled"
-        :error="vSelectBindings.error"
-        :light="vSelectBindings.light"
+        :disabled="vSelectBindings.disabled || false"
+        :color="vSelectBindings.color || ''"
+        :error="vSelectBindings.error || false"
+        :light="vSelectBindings.light || false"
+        :dark="vSelectBindings.dark || false"
         :messages="bindings['messages'] || ''"
         :error-count="bindings['error-count'] || 1"
         :error-messages="bindings['error-messages'] || ''"
@@ -124,6 +126,8 @@ const ENABLED_BINDINGS = {
     'item-color',
     'light',
     'menu-props',
+    'outlined',
+    'rounded',
   ],
 };
 
@@ -195,6 +199,11 @@ export default {
     };
   },
   computed: {
+    isDark() {
+      const isDarkTheme = this.$vuetify.theme.isDark;
+      return (isDarkTheme && !this.vSelectBindings.light)
+        || (!isDarkTheme && this.vSelectBindings.dark);
+    },
     bindings() {
       return this.getBindings('COMPONENT');
     },
@@ -376,11 +385,10 @@ export default {
         border-bottom-right-radius: 0px;
       }
       ::v-deep .v-label {
-        background: white;
         padding-right: 3px;
       }
       ::v-deep .v-input__control {
-        border-right: 1px dashed gray;
+        /*border-right: 1px dashed gray;*/
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
       }
@@ -397,14 +405,21 @@ export default {
       }
     }
     &.hovering {
-      ::v-deep fieldset {
-        border-color: gray;
+      &.is-dark {
+        ::v-deep fieldset, ::v-deep .v-input__slot::before {
+          border-color: rgba(255, 255, 255);
+        }
+      }
+      &.is-light {
+        ::v-deep fieldset, ::v-deep .v-input__slot::before {
+          border-color: rgba(0, 0, 0, 0.87);
+        }
       }
     }
     &.focusing {
       ::v-deep fieldset {
         border-width: 2px;
-        border-color: blue;
+        /*border-color: blue;*/
       }
     }
   }
