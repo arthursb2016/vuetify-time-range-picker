@@ -121,13 +121,13 @@ const ENABLED_BINDINGS = {
     'flat',
     'height',
     'hide-selected',
-    'solo',
-    'solo-inverted',
     'item-color',
     'light',
     'menu-props',
     'outlined',
     'rounded',
+    'solo',
+    'solo-inverted',
   ],
   /* stopped at 'prefix' */
 };
