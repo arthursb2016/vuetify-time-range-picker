@@ -73,6 +73,7 @@
         }"
         :disabled="vSelectBindings.disabled"
         :error="vSelectBindings.error"
+        :light="vSelectBindings.light"
         :error-count="bindings['error-count'] || 1"
         :error-messages="bindings['error-messages'] || ''"
         :hide-details="bindings['hide-details'] || false"
@@ -120,6 +121,7 @@ const ENABLED_BINDINGS = {
     'solo-inverted',
     'item-color',
     'light',
+    'menu-props',
   ],
 };
 
