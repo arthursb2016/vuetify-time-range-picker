@@ -18,6 +18,7 @@
         class="interval-select start-time"
         :class="getClassBindings('start')"
         :append-icon="startAppendIcon"
+        :prefix="startPrefix"
         v-bind="vSelectBindings"
         @change="onChange"
         @focus="setFocusing('start')"
@@ -41,6 +42,7 @@
         class="interval-select end-time"
         :class="getClassBindings('end')"
         :append-icon="endAppendIcon"
+        :prefix="endPrefix"
         v-bind="vSelectBindings"
         @change="onChange"
         @focus="setFocusing('end')"
@@ -182,6 +184,14 @@ export default {
     disabledTimes: {
       type: [String, Array],
       default: () => [],
+    },
+    startPrefix: {
+      type: String,
+      default: () => '',
+    },
+    endPrefix: {
+      type: String,
+      default: () => '',
     },
   },
   model: {
