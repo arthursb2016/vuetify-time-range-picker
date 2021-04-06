@@ -14,19 +14,24 @@
         ref="startTime"
         v-model="startTime"
         :items="getTimes('start')"
-        :label="inputLabel"
         hide-details
         class="interval-select start-time"
-        :class="{
-          'hovering': isHovering,
-          'focusing': isFocusing,
-        }"
+        :class="getClassBindings('start')"
         :append-icon="startAppendIcon"
         v-bind="vSelectBindings"
         @change="onChange"
-        @focus="setFocusing(true)"
-        @blur="setFocusing(false)"
-      />
+        @focus="setFocusing('start')"
+        @blur="setFocusing(null)"
+      >
+        <template
+          v-if="inputLabel"
+          #label
+        >
+          <span :class="{ [textColor]: focusing === 'end' }">
+            {{ inputLabel }}
+          </span>
+        </template>
+      </v-select>
       <v-select
         ref="endTime"
         v-model="endTime"
@@ -34,15 +39,12 @@
         label=""
         hide-details
         class="interval-select end-time"
-        :class="{
-          'hovering': isHovering,
-          'focusing': isFocusing,
-        }"
+        :class="getClassBindings('end')"
         :append-icon="endAppendIcon"
         v-bind="vSelectBindings"
         @change="onChange"
-        @focus="setFocusing(true)"
-        @blur="setFocusing(false)"
+        @focus="setFocusing('end')"
+        @blur="setFocusing(null)"
       />
       <!-- <slot name="append" /> -->
       <v-icon
@@ -242,7 +244,7 @@ export default {
       return this.hovering;
     },
     isFocusing() {
-      return this.focusing;
+      return !!this.focusing;
     },
     showHint() {
       return this.isFocusing || this.bindings['persistent-hint'];
@@ -252,6 +254,13 @@ export default {
         return [this.disabledTimes];
       }
       return this.disabledTimes;
+    },
+    textColor() {
+      const color = (this.vSelectBindings.color || '')
+                      .split(/(?=[A-Z])/)
+                      .join('-')
+                      .toLowerCase() || 'primary';
+      return `${color}--text`;
     },
   },
   watch: {
@@ -306,6 +315,14 @@ export default {
       }
       return enabled.filter(filter).reduce(reducer, {});
     },
+    getClassBindings(input) {
+      return {
+        'hovering': this.isHovering && !this.isFocusing,
+        'v-input--is-focused': this.isFocusing && this.focusing !== input,
+        'v-select--is-menu-active': this.isFocusing && this.focusing !== input,
+        [this.textColor]: this.isFocusing && this.focusing !== input,
+      };
+    },
     initValues() {
       const finder = time => (i) => i === time;
       const start = this.startTimes.find(finder(this.range.start));
@@ -318,34 +335,11 @@ export default {
     setHovering(hovering) {
       this.hovering = hovering;
     },
-    setFocusing(focusing) {
-      this.focusing = focusing;
-      if (focusing) {
-        this.setInputsBorder({
-          borderColor: this.componentColor,
-          borderWidth: '2px',
-        });
-        return;
-      }
-      this.setInputsBorder();
+    setFocusing(input) {
+      this.focusing = input;
+      if (this.focusing) return;
       this.$refs.startTime.blur();
       this.$refs.endTime.blur();
-    },
-    setInputsBorder(params = { borderColor: '', borderWidth: '' }) {
-      const isOutlined = this.vSelectBindings.outlined;
-      const query = isOutlined ? 'fieldset' : '.v-input__slot';
-      const elements = document.querySelectorAll(`.interval-select ${query}`);
-      elements.forEach((item) => {
-        Object.keys(params).forEach((key) => {
-          if (isOutlined) {
-            item.style[key] = params[key];
-          } else {
-            const attr = key.split(/(?=[A-Z])/).join('-').toLowerCase();
-            console.log(`data-${attr}`);
-            item.setAttribute(`data-${attr}`, params[key]);
-          }
-        });
-      });
     },
     doubleDigit(digit) {
       if ((typeof digit === 'string' && digit.length === 1)
@@ -362,7 +356,7 @@ export default {
       this.onUpdate();
     },
     onChange() {
-      this.focusing = true;
+      this.setFocusing(this.focusing);
       this.onUpdate();
     },
     onUpdate() {
@@ -438,12 +432,6 @@ export default {
         ::v-deep fieldset, ::v-deep .v-input__slot::before {
           border-color: rgba(0, 0, 0, 0.87);
         }
-      }
-    }
-    &.focusing {
-      ::v-deep .v-input__slot::before {
-        border-color: attr(data-border-color);
-        border-width: attr(data-border-width);
       }
     }
   }
