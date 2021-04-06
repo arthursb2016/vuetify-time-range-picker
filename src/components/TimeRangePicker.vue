@@ -18,8 +18,6 @@
         hide-details
         class="interval-select start-time"
         :class="{
-          'is-dark': isDark,
-          'is-light': !isDark,
           'hovering': isHovering,
           'focusing': isFocusing,
         }"
@@ -37,8 +35,6 @@
         hide-details
         class="interval-select end-time"
         :class="{
-          'is-dark': isDark,
-          'is-light': !isDark,
           'hovering': isHovering,
           'focusing': isFocusing,
         }"
@@ -336,12 +332,18 @@ export default {
       this.$refs.endTime.blur();
     },
     setInputsBorder(params = { borderColor: '', borderWidth: '' }) {
-      /* TODO: change border color os .v-input__slot::before when it's not outlined */
-      const query = this.vSelectBindings.outlined ? 'fieldset' : '';
+      const isOutlined = this.vSelectBindings.outlined;
+      const query = isOutlined ? 'fieldset' : '.v-input__slot';
       const elements = document.querySelectorAll(`.interval-select ${query}`);
       elements.forEach((item) => {
         Object.keys(params).forEach((key) => {
-          item.style[key] = params[key];
+          if (isOutlined) {
+            item.style[key] = params[key];
+          } else {
+            const attr = key.split(/(?=[A-Z])/).join('-').toLowerCase();
+            console.log(`data-${attr}`);
+            item.setAttribute(`data-${attr}`, params[key]);
+          }
         });
       });
     },
@@ -427,15 +429,21 @@ export default {
       }
     }
     &.hovering {
-      &.is-dark {
+      &.theme--dark {
         ::v-deep fieldset, ::v-deep .v-input__slot::before {
           border-color: rgba(255, 255, 255);
         }
       }
-      &.is-light {
+      &.theme--light {
         ::v-deep fieldset, ::v-deep .v-input__slot::before {
           border-color: rgba(0, 0, 0, 0.87);
         }
+      }
+    }
+    &.focusing {
+      ::v-deep .v-input__slot::before {
+        border-color: attr(data-border-color);
+        border-width: attr(data-border-width);
       }
     }
   }
