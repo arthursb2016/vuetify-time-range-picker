@@ -48,9 +48,11 @@
         @focus="setFocusing('end')"
         @blur="setFocusing(null)"
       />
-      <!-- <slot name="append" /> -->
+      <span v-if="$slots.append">
+        <slot name="append" />
+      </span>
       <v-icon
-        v-if="!hideOuterIcon && outerIcon"
+        v-else-if="!hideOuterIcon && outerIcon"
         :color="outerIconColor"
         class="ml-1"
       >
@@ -351,6 +353,9 @@ export default {
       this.onUpdate();
     },
     setHovering(hovering) {
+      if (this.vSelectBindings.disabled) {
+        return
+      }
       this.hovering = hovering;
       if (this.hovering) {
         this.$emit('mouseover');
