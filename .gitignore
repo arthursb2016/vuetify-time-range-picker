@@ -1,1 +1,2 @@
-src/node_modules/.cache
+dist
+src/node_modules
