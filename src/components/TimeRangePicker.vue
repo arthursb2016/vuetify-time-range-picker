@@ -76,11 +76,13 @@
         :error="vSelectBindings.error || false"
         :light="vSelectBindings.light || false"
         :dark="vSelectBindings.dark || false"
+        :success="vSelectBindings.success || false"
         :messages="bindings['messages'] || ''"
         :error-count="bindings['error-count'] || 1"
         :error-messages="bindings['error-messages'] || ''"
         :hide-details="bindings['hide-details'] || false"
         :hint="bindings['hint'] || ''"
+        :success-messages="bindings['success-messages'] || ''"
         :persistent-hint="showHint"
         @change="onWholeDayChange"
       />
@@ -107,6 +109,7 @@ const ENABLED_BINDINGS = {
     'hint',
     'persistent-hint',
     'messages',
+    'success-messages',
   ],
   SELECT: [
     'background-color',
@@ -129,6 +132,7 @@ const ENABLED_BINDINGS = {
     'shaped',
     'solo',
     'solo-inverted',
+    'success',
   ],
 };
 
@@ -222,7 +226,11 @@ export default {
       return this.getBindings('COMPONENT');
     },
     vSelectBindings() {
-      return this.getBindings('SELECT');
+      return {
+        ...this.getBindings('SELECT'),
+        error: !!this.bindings['error-messages'],
+        success: !!this.bindings['success-messages'],
+      };
     },
     times() {
       const maxHour = 24;
