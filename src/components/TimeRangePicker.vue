@@ -126,10 +126,10 @@ const ENABLED_BINDINGS = {
     'menu-props',
     'outlined',
     'rounded',
+    'shaped',
     'solo',
     'solo-inverted',
   ],
-  /* stopped at 'prefix' */
 };
 
 export default {
