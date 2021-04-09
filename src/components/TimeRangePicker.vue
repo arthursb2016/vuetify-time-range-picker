@@ -53,7 +53,7 @@
       </span>
       <v-icon
         v-else-if="!hideOuterIcon && outerIcon"
-        :color="outerIconColor"
+        :color="cmpOuterIconColor"
         class="ml-1"
       >
         {{ outerIcon }}
@@ -282,6 +282,12 @@ export default {
                       .toLowerCase() || 'primary';
       return `${color}--text`;
     },
+    cmpOuterIconColor() {
+      if (this.isFocusing) {
+        return this.vSelectBindings.color || 'primary';
+      }
+      return this.outerIconColor;
+    },
   },
   watch: {
     range: {
@@ -438,9 +444,30 @@ export default {
         padding-right: 3px;
       }
       ::v-deep .v-input__control {
-        /*border-right: 1px dashed gray;*/
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
+        &::after {
+          content: "";
+          border-right: 1px dashed rgba(0, 0, 0, 0.42);
+          height: 90%;
+          position: absolute;
+          right: 2%;
+          top: 6%;
+        }
+      }
+      &.theme--dark {
+        ::v-deep .v-input__control {
+          &::after {
+            border-right: 1px dashed rgba(255, 255, 255, 0.7);
+          }
+        }
+      }
+      &.v-input--is-focused {
+        ::v-deep .v-input__control {
+          &::after {
+            border-right: 1px dashed currentColor;
+          }
+        }
       }
     }
     &.end-time {
