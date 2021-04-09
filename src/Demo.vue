@@ -1,7 +1,13 @@
 <template>
   <v-app id="app">
     <div class="demo-container">
-      <time-range-picker />
+      <time-range-picker
+        v-model="range"
+        full-width
+        hide-details
+        hide-selected
+        outlined
+      />
     </div>
   </v-app>
 </template>
@@ -16,9 +22,12 @@ export default {
   mixins: [],
   props: {},
   data() {
-    return {};
+    return {
+      range: {},
+    };
   },
   computed: {},
+  watch: {},
   methods: {},
 };
 </script>
