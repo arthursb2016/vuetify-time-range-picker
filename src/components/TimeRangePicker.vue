@@ -352,12 +352,21 @@ export default {
     },
     setHovering(hovering) {
       this.hovering = hovering;
+      if (this.hovering) {
+        this.$emit('mouseover');
+        return;
+      }
+      this.$emit('mouseleave');
     },
     setFocusing(input) {
       this.focusing = input;
-      if (this.focusing) return;
+      if (this.focusing) {
+        this.$emit('focus')
+        return;
+      }
       this.$refs.startTime.blur();
       this.$refs.endTime.blur();
+      this.$emit('blur');
     },
     doubleDigit(digit) {
       if ((typeof digit === 'string' && digit.length === 1)
