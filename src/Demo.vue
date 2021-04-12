@@ -7,6 +7,7 @@
         hide-details
         hide-selected
         outlined
+        step="30"
       />
     </div>
   </v-app>
@@ -14,6 +15,11 @@
 <script>
 import TimeRangePicker from './components/TimeRangePicker';
 
+/*
+ * TODO:
+ * minStartTime
+ * maxStartTime
+ */
 export default {
   name: 'Demo',
   components: {
