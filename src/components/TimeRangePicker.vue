@@ -7,6 +7,7 @@
   >
     <div
       class="d-flex"
+      :class="innerDivCustomClassBindings"
       @mouseover="setHovering(true)"
       @mouseleave="setHovering(false)"
     >
@@ -203,6 +204,10 @@ export default {
       type: Boolean,
       default: () => false,
     },
+    innerDivCustomClass: {
+      type: Boolean,
+      default: () => false,
+    },
   },
   model: {
     prop: 'range',
@@ -291,6 +296,12 @@ export default {
         return this.vSelectBindings.color || 'primary';
       }
       return this.outerIconColor;
+    },
+    innerDivCustomClassBindings() {
+      if (this.innerDivCustomClass) {
+        return { [this.innerDivCustomClass]: true };
+      }
+      return '';
     },
   },
   watch: {
