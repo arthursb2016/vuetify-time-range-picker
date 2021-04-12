@@ -199,6 +199,10 @@ export default {
       type: String,
       default: () => '',
     },
+    noInputSeparator: {
+      type: Boolean,
+      default: () => false,
+    },
   },
   model: {
     prop: 'range',
@@ -343,6 +347,7 @@ export default {
     },
     getClassBindings(input) {
       return {
+        'no-input-separator': this.noInputSeparator && input === 'start',
         'hovering': this.isHovering && !this.isFocusing,
         'v-input--is-focused': this.isFocusing && this.focusing !== input,
         'v-select--is-menu-active': this.isFocusing && this.focusing !== input,
@@ -443,7 +448,7 @@ export default {
       ::v-deep .v-label {
         padding-right: 3px;
       }
-      ::v-deep .v-input__control {
+      &:not(.no-input-separator)::v-deep .v-input__control {
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
         &::after {
@@ -455,7 +460,7 @@ export default {
           top: 6%;
         }
       }
-      &.theme--dark {
+      &:not(.no-input-separator).theme--dark {
         ::v-deep .v-input__control {
           &::after {
             border-right: 1px dashed rgba(255, 255, 255, 0.7);
