@@ -15,11 +15,6 @@
 <script>
 import TimeRangePicker from './components/TimeRangePicker';
 
-/*
- * TODO:
- * minStartTime
- * maxStartTime
- */
 export default {
   name: 'Demo',
   components: {

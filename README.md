@@ -97,9 +97,5 @@ Besides you can also pass most of the [v-select props](https://vuetifyjs.com/en/
 | focus | Emitted at input focus |
 | blur | Emitted at input blur |
 
-## Examples
-
-To be done...
-
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
