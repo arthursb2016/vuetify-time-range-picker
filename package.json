@@ -4,11 +4,10 @@
   "description": "",
   "main": "dist/time-range-picker.umd.js",
   "module": "dist/time-range-picker.esm.js",
-  "browser": {
-    "./sfc": "src/time-range-picker.vue"
-  },
   "files": [
-    "dist"
+    "dist",
+    "src/index.js",
+    "src/components"
   ],
   "scripts": {
     "prepare": "npm run build",
