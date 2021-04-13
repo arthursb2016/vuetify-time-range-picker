@@ -4,15 +4,17 @@
   "description": "",
   "main": "dist/time-range-picker.umd.js",
   "module": "dist/time-range-picker.esm.js",
-  "unpkg": "dist/time-range-picker.min.js",
   "browser": {
     "./sfc": "src/time-range-picker.vue"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "prepare": "npm run build",
+    "build": "npm run build:umd & npm run build:es",
     "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/time-range-picker.umd.js",
-    "build:es": "rollup --config build/rollup.config.js --format es --file dist/time-range-picker.esm.js",
-    "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/time-range-picker.min.js"
+    "build:es": "rollup --config build/rollup.config.js --format es --file dist/time-range-picker.esm.js"
   },
   "repository": {
     "type": "git",

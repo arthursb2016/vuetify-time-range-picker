@@ -16,6 +16,8 @@ export default {
     }),
     scss(),
     commonjs(),
-    buble(),
+    buble({
+      objectAssign: 'Object.assign',
+    }),
   ],
 };
