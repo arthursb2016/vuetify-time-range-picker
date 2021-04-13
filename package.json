@@ -2,7 +2,7 @@
   "name": "vuetify-time-range-picker",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/time-range-picker.umd.js",
+  "main": "dist/time-range-picker.umd.min.js",
   "module": "dist/time-range-picker.esm.js",
   "files": [
     "dist",
@@ -12,8 +12,9 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "npm run build:umd & npm run build:es",
-    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/time-range-picker.umd.js",
-    "build:es": "rollup --config build/rollup.config.js --format es --file dist/time-range-picker.esm.js"
+    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/time-range-picker.umd.js & npm run minify",
+    "build:es": "rollup --config build/rollup.config.js --format es --file dist/time-range-picker.esm.js",
+    "minify": "uglifyjs -o dist/time-range-picker.umd.min.js dist/time-range-picker.umd.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "rollup-plugin-vue": "^6.0.0",
     "sass": "^1.32.8",
     "sass-loader": "^10.1.1",
+    "uglify-js": "^3.13.4",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.6.12",
     "vuetify": "^2.4.8"
