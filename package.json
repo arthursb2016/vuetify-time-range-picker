@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A time range picker, made so users can easily pick a one day time interval.",
   "main": "dist/time-range-picker.umd.min.js",
-  "module": "dist/time-range-picker.esm.js",
   "files": [
     "dist",
     "src/index.js",
@@ -13,7 +12,6 @@
     "prepare": "npm run build",
     "build": "npm run build:umd & npm run build:es",
     "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/time-range-picker.umd.js & npm run minify",
-    "build:es": "rollup --config build/rollup.config.js --format es --file dist/time-range-picker.esm.js",
     "minify": "uglifyjs -o dist/time-range-picker.umd.min.js dist/time-range-picker.umd.js"
   },
   "repository": {
@@ -22,6 +20,13 @@
   },
   "author": "Arthur Borba",
   "license": "MIT",
+  "keywords": [
+    "vuetify",
+    "vue",
+    "time range picker",
+    "time picker",
+    "interval"
+  ],
   "bugs": {
     "url": "https://github.com/arthursb2016/vuetify-time-range-picker/issues"
   },
