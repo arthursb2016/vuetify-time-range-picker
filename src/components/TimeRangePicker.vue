@@ -500,7 +500,7 @@ export default {
     &.hovering {
       &.theme--dark {
         ::v-deep fieldset, ::v-deep .v-input__slot::before {
-          border-color: rgba(255, 255, 255);
+          border-color: rgb(255, 255, 255);
         }
       }
       &.theme--light {
