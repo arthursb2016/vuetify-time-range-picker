@@ -62,7 +62,10 @@
     </div>
     <div
       v-show="!hideWholeDayCheckbox"
-      class="whole-day"
+      class="whole-day mt-1 d-flex"
+      :class="{
+        'outlined': vSelectBindings.outlined,
+      }"
     >
       <v-checkbox
         v-model="wholeDay"
@@ -522,6 +525,16 @@ export default {
       &.cursor-not-allowed {
         .v-label, input {
           cursor: not-allowed !important;
+        }
+      }
+    }
+    &:not(.outlined) {
+      ::v-deep .v-input {
+        .v-input__slot {
+          margin-left: calc(-15% + 1px);
+        }
+        .v-messages {
+          margin-left: 0px;
         }
       }
     }
