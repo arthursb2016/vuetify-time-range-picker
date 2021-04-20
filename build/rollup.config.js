@@ -3,8 +3,6 @@ import vue from 'rollup-plugin-vue';
 import buble from '@rollup/plugin-buble';
 import scss from 'rollup-plugin-scss';
 import vuetify from 'rollup-plugin-vuetify';
-import resolve from '@rollup/plugin-node-resolve';
-// import alias from '@rollup/plugin-alias';
 
 export default {
   input: 'src/index.js',
@@ -15,17 +13,14 @@ export default {
       'vue': 'Vue',
     },
   },
-  // external: ['vue', 'vuetify/lib'],
+  external: ['vue', 'vuetify/lib'],
   plugins: [
-    /*alias({
-      'vue': require.resolve('vue/dist/vue.common.js'),
-    }),*/
-    resolve(),
     commonjs({
       include: /node_modules/,
     }),
     scss(),
     vue({
+      css: true,
       compileTemplate: true,
     }),
     vuetify(),
