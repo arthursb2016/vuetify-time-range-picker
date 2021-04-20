@@ -1,17 +1,21 @@
 {
   "name": "vuetify-time-range-picker",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "A time range picker, made so users can easily pick a one day time interval.",
   "main": "dist/time-range-picker.umd.min.js",
+  "module": "dist/time-range-picker.esm.min.js",
   "files": [
     "dist",
     "src/index.js",
     "src/components"
   ],
   "scripts": {
-    "build": "npm run build:umd",
-    "build:esm": "rollup --config build/rollup.config.js --format esm --file dist/time-range-picker.esm.js",
-    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/time-range-picker.umd.js"
+    "prepare": "build",
+    "build": "npm run build:esm & npm run build:umd",
+    "build:esm": "rollup --config build/rollup.config.js --format esm --file dist/time-range-picker.esm.js & npm run minify:esm",
+    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/time-range-picker.umd.js & npm run minify:umd",
+    "minify:esm": "uglifyjs -o dist/time-range-picker.esm.min.js dist/time-range-picker.esm.js",
+    "minify:umd": "uglifyjs -o dist/time-range-picker.umd.min.js dist/time-range-picker.umd.js"
   },
   "repository": {
     "type": "git",
