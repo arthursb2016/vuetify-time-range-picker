@@ -1,31 +1,37 @@
 import commonjs from '@rollup/plugin-commonjs';
 import vue from 'rollup-plugin-vue';
 import buble from '@rollup/plugin-buble';
-import sass from 'rollup-plugin-sass';
 import scss from 'rollup-plugin-scss';
-import postcss from 'rollup-plugin-postcss';
 import vuetify from 'rollup-plugin-vuetify';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
+// import alias from '@rollup/plugin-alias';
 
 export default {
   input: 'src/index.js',
   output: {
     name: 'TimeRangePicker',
     exports: 'named',
+    globals: {
+      'vue': 'Vue',
+    },
   },
-  external: ['vue', 'vuetify/lib'],
+  // external: ['vue', 'vuetify/lib'],
   plugins: [
-    postcss(),
-    nodeResolve(),
+    /*alias({
+      'vue': require.resolve('vue/dist/vue.common.js'),
+    }),*/
+    resolve(),
     commonjs({
-      include: 'node_modules',
+      include: /node_modules/,
     }),
     scss(),
-    sass(),
-    vue(),
+    vue({
+      compileTemplate: true,
+    }),
     vuetify(),
     buble({
       objectAssign: 'Object.assign',
+      transforms: { forOf: false }
     }),
   ],
 };
