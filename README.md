@@ -63,7 +63,7 @@ export default {
 | range | Object  | An object used as v-model containing 'start' and 'end' | { start: '00:00', end: '23:59' } |
 | inputLabel | String  | Input label text | 'Interval' |
 | wholeDayLabel  | String  | Whole day checkbox label text | 'Whole day' |
-| step |String, Number | Interval of minures between available times | 15 |
+| step |String, Number | Interval of minutes between available times | 15 |
 | outerIcon | String | Outer vuetify v-icon default slot | 'access_time' |
 | outerIconColor | String | Outer vuetify v-icon color prop | '' |
 | startAppendIcon | String | Start time append icon | '' |
@@ -76,6 +76,7 @@ export default {
 | hideWholeDayCheckbox | Boolean | Hides whole day option | false |
 | hideOuterIcon | Boolean | Hides outer v-icon | false |
 
+<br />
 
 Besides you can also pass most of the [v-select props](https://vuetifyjs.com/en/api/v-select/#props). The enabled ones are:
 
