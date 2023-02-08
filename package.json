@@ -1,6 +1,6 @@
 {
   "name": "vuetify-time-range-picker",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A time range picker, made so users can easily pick a one day time interval.",
   "main": "dist/time-range-picker.umd.min.js",
   "module": "dist/time-range-picker.esm.min.js",
