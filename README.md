@@ -2,6 +2,8 @@
 
 A time range picker based on [Vuetify](https://vuetifyjs.com/), made so users can easily pick a one day time interval.
 
+Compatible with **Vue 2 and Vuetify 2**. If you need a Vue 3 and Vuetify 3 compatible version: [check the upgraded version](https://www.npmjs.com/package/vuetify3-time-range-picker).
+
 ![Demo](images/demo.gif?raw=true)
 
 ## Installation
